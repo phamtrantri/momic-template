@@ -1,4 +1,4 @@
-# How does it work?
+# How does the building flow work?
 
 - Webpack will look at the entry file (./packages/common/index.js)
 - Webpack finds imports (E.g.: import App from './App')
@@ -7,3 +7,7 @@
 - babel-loader uses config in babel.config.json
 - Babel parses the code into an AST, applies presets/plugins and generates plain JS that Webpack can understand (e.g. strip types (preset-typescript), transpile JSX (preset-react), downlevel features (preset-env))
 - Webpack takes that transformed JS, feeds it into its module graph, and continues bundling.
+
+# Monorepo
+- Each sub package has their own package.json and tsconfig.json
+- The source code under each sub package will look for the dependencies and configurations in the nearest node_modules and tsconfig.json first then resolve upward
