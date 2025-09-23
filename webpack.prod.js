@@ -1,20 +1,33 @@
 import { merge } from 'webpack-merge';
 import common from './webpack.common.js';
+// import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
 export default merge(common, {
   mode: 'production',
   devtool: 'source-map', // slower, but useful in production debugging
-  // optimization: {
-  //   minimize: true,
+  optimization: {
+    usedExports: true,
+    mangleExports: true,
+    minimize: false,
   //   minimizer: [
   //     new TerserPlugin({
   //       extractComments: false,
   //     }),
   //     new CssMinimizerPlugin(),
   //   ],
-  //   splitChunks: {
-  //     chunks: 'all', // vendor code splitting
-  //   },
-  //   runtimeChunk: 'single', // better long-term caching
-  // },
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+      // chunks: 'all',
+    },
+    runtimeChunk: 'single', // better long-term caching
+  },
+  // plugins: [
+  //   new BundleAnalyzerPlugin(),
+  // ]
 });
